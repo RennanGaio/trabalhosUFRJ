@@ -19,14 +19,49 @@
 void run_bg_command (const char** commands, int size){
 	printf("lul");
 }
-void run_command(const char** commands, int size){
-	if (strcmp(commands[0], "cd") == 0){
 
+
+void run_command(const char** commands, int size){
+  //função cd
+	if (strcmp(commands[0], "cd") == 0){
 		char * home = getenv("HOME");
 		const char *arg = commands[1];
 		if (size==1) chdir(home);
 		else chdir(arg);
 	} 
+
+  //função quit 
+  else if(strcmp(commands[0], "quit") == 0){
+     exit(1);
+  }
+  // else if(strcmp(commands[0], "dir") == 0)
+
+  //todas as outras funções, incluindo dir e pwd
+  else {
+     pid_t  pid; int    status;
+     char *cmdExec = commands[0];
+     char *argv[size+1];
+     int command;
+     //organiza os comandos para serem chamados pela função execvp
+     for(command = 0; command < size; command++){
+        argv[command] = commands[command];
+     }
+     argv[size] = NULL;
+   
+     //faz um fork
+     if ((pid = fork()) < 0) exit(0);
+     //executa os comandos usando execvp
+     else if (pid == 0) {  
+        if(execvp(cmdExec, argv) < 0) exit(1);
+     }
+     else {                                  /* for the parent:      */
+            while (wait(&status) != pid)       /* wait for completion  */
+                 ;
+      }
+
+  }
+     
+     
 }
 
 int main(int argc, char *argv[]) {
