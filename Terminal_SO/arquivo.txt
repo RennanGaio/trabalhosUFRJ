@@ -1,0 +1,8 @@
+dir
+cd ..
+echo "oi"
+sleep 5 &
+environ
+help
+sleep 5
+quit

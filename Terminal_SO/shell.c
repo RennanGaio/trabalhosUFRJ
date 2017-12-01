@@ -89,15 +89,12 @@ int main(int argc, char *argv[]) {
   char *cmd;
   char line[MAX_LENGTH];
   char cwd[1024];
-  
-  // char str[80] = "pip install python &";
+  getcwd(cwd, sizeof(cwd));
+  char bash[100] = "BASH=";
+  strcat(bash,cwd);
+  strcat(bash,"/myshell");
+  putenv(bash);
 
-  // cmd=strtok(str, DELIMS);
-  // while( cmd != NULL ) {
-  //     printf( " %s\n", cmd );
-  //   
-  //     cmd = strtok(NULL, DELIMS);
-  // }
   while (1) {
   	getcwd(cwd, sizeof(cwd));
     printf("%s:%s <3- ", (getpwuid(getuid()))->pw_name ,cwd);
@@ -114,10 +111,6 @@ int main(int argc, char *argv[]) {
       	count++;
  	}
 
- 	// for (int i = 0; i < count; ++i)
- 	// {
- 	// 	printf("%s\n", commands[i]);
- 	// }
  	if (count==0){
  		continue;
  	}
@@ -129,28 +122,6 @@ int main(int argc, char *argv[]) {
  		run_command(commands, count);
  	}
   }
-
-
-
-  //   // Parse and execute command
-  //   if ((cmd = strtok(line, DELIMS))) {
-  //     // Clear errors
-  //     errno = 0;
-
-  //     if (strcmp(cmd, "cd") == 0) {
-  //       char *arg = strtok(0, DELIMS);
-
-  //       if (!arg) fprintf(stderr, "cd missing argument.\n");
-  //       else chdir(arg);
-
-  //     } else if (strcmp(cmd, "exit") == 0) {
-  //       break;
-
-  //     } else system(line);
-
-  //     if (errno) perror("Command failed");
-  //   }
-  // }
 
   return 0;
 }

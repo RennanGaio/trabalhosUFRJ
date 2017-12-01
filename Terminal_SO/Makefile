@@ -1,5 +1,5 @@
 all: shell
-	./shell
+	./myshell
 
 shell: shell.c
-	gcc shell.c -o shell -Wall
+	gcc shell.c -o myshell -Wall
