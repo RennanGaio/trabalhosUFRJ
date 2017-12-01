@@ -90,7 +90,7 @@ int main(int argc, char *argv[]) {
   char line[MAX_LENGTH];
   char cwd[1024];
   getcwd(cwd, sizeof(cwd));
-  char bash[100] = "BASH=";
+  char bash[200] = "BASH=";
   strcat(bash,cwd);
   strcat(bash,"/myshell");
   putenv(bash);
